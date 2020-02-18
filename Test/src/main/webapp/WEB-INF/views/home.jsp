@@ -8,6 +8,6 @@
 </head>
 <body>
 <h1>Git Test 중입니다!</h1>
-<h3>안도원</h3>
+<h3>이성우</h3>
 </body>
 </html>
