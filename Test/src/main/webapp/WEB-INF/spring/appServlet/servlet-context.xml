@@ -3,10 +3,43 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
+ <!-- 참조값을 전달할떄는 ref / 문자나 숫자를 전달할때는 value로 전달  / beans:property는 setXXX -->
+	<beans:bean id="dataSource" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
+	</beans:bean>
+	<!-- 
+		위의 설정을 java code로 환산하면 
+		dataSource = new JndiObjectFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+	 -->
+	 
+	<beans:bean id="sessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="configLocation"
+	value="classpath:com/dowon/project/mybatis/Configuration.xml"/>
+	</beans:bean>
+	<!-- 
+		위의 설정을 java code로 환산하면 
+		dataSource = new JndiObjectFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+		
+		sessionFactory = new SplSessionFactoryBean();
+		sessionFactory.setDataDource(dataSource);
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml");
+	 -->
+	
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg name="sqlSessionFactory" 
+			ref="sessionFactory"/>
+	</beans:bean>
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -20,9 +53,14 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="com.dowon.project" />
-	
+	<!-- 어노테이션 기반으로 aop 적용할수 있도록 설정 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!--파일 업로드 폼 전송 처리를 위한 bean 설정  -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10240000"/>
+	</beans:bean>
 	
 	
 </beans:beans>
