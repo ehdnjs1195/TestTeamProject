@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+<<<<<<< HEAD
 	<typeAliases>
 		 <typeAlias type="com.dowon.project.member.dto.MemberDto" alias="memberDto"/>
 	</typeAliases>
@@ -12,3 +13,19 @@
 		<mapper resource="com/dowon/project/mybatis/MemberMapper.xml"/> <!-- MemberMapper.xml 로딩 -->
 	</mappers>
 </configuration>
+=======
+	<!-- 자주 사용하는 type 의 별칭 지정하기 -->
+	<typeAliases>
+		<typeAlias type="com.dowon.project.users.dto.UsersDto" alias="usersDto"/>
+	</typeAliases>
+
+	<!-- mapper 설정 -->
+	<mappers>
+		<mapper resource="com/dowon/project/mybatis/UsersMapper.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+>>>>>>> refs/heads/ADW

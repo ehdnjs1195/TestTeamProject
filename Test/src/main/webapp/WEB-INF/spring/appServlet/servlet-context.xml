@@ -3,16 +3,45 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+<<<<<<< HEAD
+=======
+	xmlns:tx="http://www.springframework.org/schema/tx"
+>>>>>>> refs/heads/ADW
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+<<<<<<< HEAD
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 	<beans:bean id="dataSource" 
 		class="org.springframework.jndi.JndiObjectFactoryBean">
 		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
 	</beans:bean>
+=======
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<beans:bean id="dataSource" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
+	</beans:bean>
 	
+	<beans:bean id="sessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="configLocation"
+	value="classpath:com/dowon/project/mybatis/Configuration.xml"/>
+	</beans:bean>
+	
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg name="sqlSessionFactory" 
+			ref="sessionFactory"/>
+	</beans:bean>
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+>>>>>>> refs/heads/ADW
+	
+<<<<<<< HEAD
 	<beans:bean id="sessionFactory" 
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
@@ -24,6 +53,18 @@
 			ref="sessionFactory"/>
 	</beans:bean>
 	
+=======
+	<!-- Transaction Manager  설정 -->
+	<beans:bean id="txManager" 
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+	
+	<!-- 어노테이션으로 트렌젝션 설정이 가능하도록 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+>>>>>>> refs/heads/ADW
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
@@ -37,4 +78,27 @@
 	
 	<context:component-scan base-package="com.dowon.project" />
 	
+<<<<<<< HEAD
+=======
+	<!-- 어노테이션 기반으로 aop 적용할수 있도록 설정 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- 파일 업로드 폼 전송 처리를 위한 bean 설정 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10240000"/>
+	</beans:bean>
+	
+	<!-- bean 의 이름으로 view 를 찾아 갈수 있도록 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<!-- 0 순위로 찾아가도록 하고 없으면 자동으로 views 폴더 안에서 jsp 페이지를 찾는다 -->
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	<!-- web.xml 에서 설정된 error 관련된 요청 처리 -->
+	<view-controller path="/error/404.do" view-name="error/404"/>
+	<view-controller path="/error/500.do" view-name="error/500"/>
+	
+	
+>>>>>>> refs/heads/ADW
 </beans:beans>
