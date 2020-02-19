@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member"> <!-- mapper 이름 (패키지명 처럼 .을 찍어서 지어줄 수 있다.)-->
+	<select id="getList" resultType="memberDto"> <!-- resultType => select 된 row를 어디다 담을지 -->
+	<!-- select 문을 수행 했을 때 row 가 여러개면 (목록)
+		 SelectList 를 사용해야 한다.
+		 num, name, addr (칼럼명) 과  MemberDto 의 fieldName 과 일치해야한다. -->
+		SELECT num, name, addr
+		FROM member
+		ORDER BY num ASC
+	</select>
+	
+	<delete id="delete" parameterType="int"> <!-- parameterType 한가지만 들어갈 수 있고 주로 int, String, dto 가 들어간다. -->
+		DELETE FROM member
+		WHERE num=#{num} <!-- [ MyBatis의 bind 하는 형식 ]
+							    파라미터로 전달된 숫자가 자동 바인딩 되어서 실행된다.
+							  (WHERE num=? 을 pstmt.setInt() 로 바인딩 한 것과 같은 형식) -->
+	</delete>
+	
+	<insert id="insert" parameterType="memberDto">
+		INSERT INTO member
+		(num, name, addr)
+		VALUES(member_seq.NEXTVAL, #{name}, #{addr}) <!-- #{name} <= getName() -->
+	</insert>
+	
+	<select id="getData" parameterType="int" resultType="memberDto"> <!-- resultType 은 select 문에서만 있음 (select 된 row를 어디다 담을지)-->
+		SELECT num,name,addr
+		FROM member
+		WHERE num=#{num}
+	</select>
+	
+	<update id="update" parameterType="memberDto" >
+		UPDATE member
+		SET name=#{name}, addr=#{addr}
+		WHERE num=#{num}
+	</update>
+	
+</mapper>
