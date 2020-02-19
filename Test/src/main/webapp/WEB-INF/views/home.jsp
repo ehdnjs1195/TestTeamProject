@@ -4,12 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Team</title>
+<title>/views/home.jsp</title>
+<jsp:include page="include/resource.jsp"/>
 </head>
 <body>
-<h1>Git Test 중입니다!</h1>
-<h3>안도원</h3>
-<h3>박유석</h3>
-<h3>박유석2</h3>
+<jsp:include page="include/navbar.jsp"/>
+<div class="container">
+	<h1>인덱스 페이지 입니다</h1>
+	<ul>
+		<li><a href="member/list.do">회원 목록 보기(member 테이블)</a></li>
+	</ul>
+</div>
 </body>
 </html>
