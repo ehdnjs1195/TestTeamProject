@@ -15,47 +15,52 @@ public class CafeDaoImpl implements CafeDao{
 	
 	@Override
 	public int getCount(CafeDto dto) {
-		// TODO Auto-generated method stub
-		return session.selectOne("cafe.getCount", dto);
+		return session.selectOne("cafe.getCount",dto);
 	}
 
 	@Override
 	public List<CafeDto> getList(CafeDto dto) {
-		// TODO Auto-generated method stub
-		return session.selectList("cafe.getList", dto);
+		List<CafeDto> list= session.selectList("cafe.getList",dto);
+		return list;
 	}
 
 	@Override
 	public void insert(CafeDto dto) {
-		session.insert("cafe.insert", dto);
-	}
-
-	@Override
-	public CafeDto getData(CafeDto dto) {
-		// TODO Auto-generated method stub
-		return session.selectOne("cafe.getData", dto);
-	}
-
-	@Override
-	public void addViewCount(int num) {
-		session.update("cafe.addViewCount", num);
+		session.insert("cafe.insert",dto);		
 	}
 
 	@Override
 	public void delete(int num) {
-		session.delete("cafe.delete", num);
+		session.delete("cafe.delete",num);
 	}
 
 	@Override
 	public CafeDto getData(int num) {
-		// TODO Auto-generated method stub
-		return session.selectOne("cafe.getData2", num);
+		CafeDto dto=session.selectOne("cafe.getData2",num);
+		return dto;
+		
 	}
 
 	@Override
 	public void update(CafeDto dto) {
-		session.update("cafe.update", dto);
+		session.update("cafe.update",dto);
 	}
-	
+
+	@Override
+	public void addViewCount(int num) {
+		session.update("cafe.addViewCount",num);
+	}
+
+	@Override
+	public void commUpdate(CafeDto dto) {
+		session.update("cafe.commupdate",dto);	
+		
+	}
+
+	@Override
+	public CafeDto getDate(CafeDto dto) {
+		return session.selectOne("cafe.getData1", dto);
+	}
+
 	
 }
